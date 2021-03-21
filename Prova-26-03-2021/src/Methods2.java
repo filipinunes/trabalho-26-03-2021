@@ -43,7 +43,6 @@ public class Methods2 {
 
 
 		String mascara = convMasc(Integer.parseInt(teste.get(4)));
-		System.out.println(mascara);
 		List<String> teste2 = new ArrayList<>();
 		teste2 = getTokens(mascara);
 
