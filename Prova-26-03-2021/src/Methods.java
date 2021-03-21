@@ -3,52 +3,55 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Methods {
-	//separa o ip em blocos e retorna um array
-	public List<String> getTokens(String str) {
-		List<String> tokens = new ArrayList<>();
-		
-		//Separa o IP da mascIP informada pelo usuario;
-		StringTokenizer tokenizer = new StringTokenizer(str, "/");
-		while (tokenizer.hasMoreElements()) {
-			tokens.add(tokenizer.nextToken());
-		}
-		String IP = tokens.get(0);
-		String masc = tokens.get(1);
-		//Limpa o array
-		tokens.clear();
-		
-		//Separa o IP em blocos
-		StringTokenizer tokenizerIP = new StringTokenizer(IP, ".");
-		while (tokenizerIP.hasMoreElements()) {
-			tokens.add(tokenizerIP.nextToken());
+		//separa o endereco em blocos e retorna um array
+		public List<String> sepTokens(String str) {
+			List<String> tokens = new ArrayList<>();
+			
+			//Separa o IP da mascIP informada pelo usuario;
+			StringTokenizer tokenizer = new StringTokenizer(str, "/");
+			while (tokenizer.hasMoreElements()) {
+				tokens.add(tokenizer.nextToken());
+			}
+	
+			return tokens;
 		}
 		
-		//Adciona a mascIP no array
-		tokens.add(masc);	
-		
-		return tokens;
-	}
+		public List<String> getTokens(String tks){
+			
+			List<String> tokens = new ArrayList<>();
+			
+			StringTokenizer tokenizerIP = new StringTokenizer(tks, ".");
+			while (tokenizerIP.hasMoreElements()) {
+				tokens.add(tokenizerIP.nextToken());
+			}
+			return tokens;
+		}
 	
 	//converte o numero IP de decimal para binario
 	public String converte(String endereco) {
-		List<String> teste = new ArrayList<>();
-		teste = getTokens(endereco);
+		List<String> ipMasc = new ArrayList<>();
+		ipMasc = sepTokens(endereco);
 		
-		String mascIP = teste.get(4);
+		List<String> IPList = new ArrayList<>();
+		IPList = getTokens(ipMasc.get(0));
 		
 		String IPconvertido = "";
 		
 		//Percorre o array pegando somente o IP e converte pra binario
 		for(int i=0; i<4;i++) {
-			int conv = Integer.parseInt(teste.get(i));
-			int conv2 = Integer.parseInt(Integer.toBinaryString(conv));
+			int intIP = Integer.parseInt(IPList.get(i));
+			int binIP = Integer.parseInt(Integer.toBinaryString(intIP));
 			if(i==3) {
-				IPconvertido = IPconvertido + String.format("%08d", conv2);
+				IPconvertido = IPconvertido + String.format("%08d", binIP);
 			} else {
-			IPconvertido = IPconvertido + String.format("%08d.", conv2);
+			IPconvertido = IPconvertido + String.format("%08d.", binIP);
 			}
+		}
+
+		if(endereco.contains("/")){
+			IPconvertido += "/" + ipMasc.get(1);
 		}	
-		return IPconvertido + "/" + mascIP;
+		return IPconvertido;
 	}
 	
 	//Identifica a mascIP do IP
@@ -66,32 +69,35 @@ public class Methods {
 	}
 	
 	//verifica se a mascIP informada pelo usuario eh a correta
-	public String verifMasc(String endereco) {
+	public int verifMasc(String endereco) {
 		String convert;
-		String classe = "Correta.";
+		int classe = 0;
 		
 		convert = endereco.substring(0,2);
 		int mascIP = Integer.parseInt(convert);
 		convert = endereco.substring(endereco.length()-2,endereco.length());
+		if(convert.contains("/")){
+			convert = endereco.substring(1,2);
+		}
 		int mascUsuario = Integer.parseInt(convert);
 		
 		if(mascIP == 0 || mascIP == 1) {
 			if(mascUsuario == 8) {
 				return classe;
 			} else {
-				return classe = "8";
+				return classe = 8;
 			}
 		} else if (mascIP == 10) {
 			if(mascUsuario == 16) {
 				return classe;
 			} else {
-				return classe = "16";
+				return classe = 16;
 			}
 		} else {
 			if(mascUsuario == 24) {
 				return classe;
 			} else {
-				return classe = "24";
+				return classe = 24;
 			}
 		}
 	}

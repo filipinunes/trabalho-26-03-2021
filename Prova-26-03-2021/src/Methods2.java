@@ -3,48 +3,43 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Methods2 {
+	
 	//separa o endereco em blocos e retorna um array
-	public List<String> getTokens(String str) {
+	public List<String> sepTokens(String str) {
 		List<String> tokens = new ArrayList<>();
 		
-		String IP = str;
-		String masc = "";
-		if(str.contains("/")){
-			//Separa o IP da mascIP informada pelo usuario;
-			StringTokenizer tokenizer = new StringTokenizer(str, "/");
-			while (tokenizer.hasMoreElements()) {
-				tokens.add(tokenizer.nextToken());
-			}
-			IP = tokens.get(0);
-			masc = tokens.get(1);
-			//Limpa o array
-			tokens.clear();
+		//Separa o IP da mascIP informada pelo usuario;
+		StringTokenizer tokenizer = new StringTokenizer(str, "/");
+		while (tokenizer.hasMoreElements()) {
+			tokens.add(tokenizer.nextToken());
 		}
 
-		
-		//Separa o IP em blocos
-		StringTokenizer tokenizerIP = new StringTokenizer(IP, ".");
-		while (tokenizerIP.hasMoreElements()) {
-			tokens.add(tokenizerIP.nextToken());
-		}
-		
-		//Adciona a mascIP no array
-		if(str.contains("/")){
-			tokens.add(masc);	
-		}
-		
 		return tokens;
 	}
 	
-	//converte o numero IP de decimal para binario
-	public List<String> converte(String endereco) {
-		List<String> teste = new ArrayList<>();
-		teste = getTokens(endereco);
+	public List<String> getTokens(String tks){
+		
+		List<String> tokens = new ArrayList<>();
+		
+		StringTokenizer tokenizerIP = new StringTokenizer(tks, ".");
+		while (tokenizerIP.hasMoreElements()) {
+			tokens.add(tokenizerIP.nextToken());
+		}
+		return tokens;
+	}
+	
+	//Calcula o endereco de subrede multiplicando mascara e IP
+	public List<String> calcSub(String endereco) {
+		List<String> ipMasc = new ArrayList<>();
+		ipMasc = sepTokens(endereco);
+		
+		List<String> IPList = new ArrayList<>();
+		IPList = getTokens(ipMasc.get(0));
 
 
-		String mascara = convMasc(Integer.parseInt(teste.get(4)));
-		List<String> teste2 = new ArrayList<>();
-		teste2 = getTokens(mascara);
+		String mascara = convMasc(Integer.parseInt(ipMasc.get(1)));
+		List<String> mascList = new ArrayList<>();
+		mascList = getTokens(mascara);
 
         List<String> retorno = new ArrayList<>();
 
@@ -53,8 +48,8 @@ public class Methods2 {
 		
 		//Percorre o array pegando endereco convertendo pra binario
 		for(int i=0; i<4;i++) {
-			int end = Integer.parseInt(teste.get(i));
-			int masc = Integer.parseInt(teste2.get(i));
+			int end = Integer.parseInt(IPList.get(i));
+			int masc = Integer.parseInt(mascList.get(i));
             
             //multiplica os enderecos em decimal e joga em uma variavel string 
             int and = end & masc;

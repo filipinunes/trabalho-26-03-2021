@@ -2,23 +2,35 @@ import javax.swing.JOptionPane;
 
 public class Main {
 	public static void main(String[] args) {
-		Methods teste = new Methods();
-		String ip1 = teste.converte("138.0.0.255/08");
-		System.out.println(ip1);
-		System.out.println(teste.identMasc(ip1));
-		System.out.println(teste.verifMasc(ip1));
+		Methods endIP = new Methods();
 
 		int opt;
-		String strMatricula = JOptionPane.showInputDialog("Endereco IP");
-		int intMatricula = Integer.parseInt(strMatricula);
+		String endereco = "";
+		do {
+			String strInput = JOptionPane.showInputDialog("Menu" 
+			+ "\n1 - Converte IP/identifica mascara"
+			+ "\n2 - Converte IP/verifica mascara"
+			+ "\n9 - Encerrar"); 
+			opt = Integer.parseInt(strInput); 
+			switch (opt){
+				case 1:
+				endereco = JOptionPane.showInputDialog("Endereco de IP"); 
 
-		String strIdade = JOptionPane.showInputDialog("Idade");
-		float floatIdade = Float.parseFloat(strIdade);
+				System.out.println("O IP convertido em binario eh: " + endIP.converte(endereco));
+				System.out.println("A classe padrao do IP informado eh: " + endIP.identMasc(endIP.converte(endereco)));
+				break;
 
-		String strSetor = JOptionPane.showInputDialog("Setor");
-		int intSetor = Integer.parseInt(strSetor);
+				case 2:
+				endereco = JOptionPane.showInputDialog("Endereco de IP com mascara"); 
+				System.out.println("O IP convertido em binario eh: " + endIP.converte(endereco));
+				if(endIP.verifMasc(endereco) == 0){
+					System.out.println("A mascara informada pelo usuario esta correta");
+				} else {
+					System.out.println("A mascara correta para este endereco eh: " + endIP.verifMasc(endIP.converte(endereco)));
+				}
 
-		teste.inserir(intMatricula, floatIdade, intSetor);
-
+				break;
+			}
+		}while(opt!=9);
 	}
 }
