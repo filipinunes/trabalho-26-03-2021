@@ -16,13 +16,13 @@ public class Main {
 				case 1:
 				endereco = JOptionPane.showInputDialog("Endereco de IP"); 
 
-				System.out.println("O IP convertido em binario eh: " + endIP.converte(endereco));
-				System.out.println("A classe padrao do IP informado eh: " + endIP.identMasc(endIP.converte(endereco)));
+				System.out.println("IP binario: " + endIP.converte(endereco));
+				System.out.println("Classe padrao: " + endIP.identMasc(endIP.converte(endereco)));
 				break;
 
 				case 2:
 				endereco = JOptionPane.showInputDialog("Endereco de IP com mascara"); 
-				System.out.println("O IP convertido em binario eh: " + endIP.converte(endereco));
+				System.out.println("IP binario: " + endIP.converte(endereco));
 				if(endIP.verifMasc(endereco) == 0){
 					System.out.println("A mascara informada pelo usuario esta correta");
 				} else {

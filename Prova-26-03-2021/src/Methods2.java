@@ -74,6 +74,7 @@ public class Methods2 {
 		return retorno;
 	}
 
+	//Converte a mascara em um endereco decimal
 	public String convMasc(int masc){
 		int cont = 0;
 		String endDec = "";

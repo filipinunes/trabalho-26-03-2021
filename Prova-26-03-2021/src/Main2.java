@@ -18,8 +18,8 @@ public class Main2 {
 				endereco = JOptionPane.showInputDialog("Endereco de IP"); 
 
 				teste2 = teste.calcSub(endereco);
-				System.out.println(teste2.get(0));
-				System.out.println(teste2.get(1));
+				System.out.println("Subrede decimal: " + teste2.get(1));
+				System.out.println("Subrede binario: " + teste2.get(0));
 				break;
 			}
 		}while(opt!=9);
